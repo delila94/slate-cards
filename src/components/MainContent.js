@@ -11,14 +11,15 @@ const MainContent = () => {
 	const [ cards, setCards ] = useState(initialCards)
    
 	const onDragEnd = (result, taskColumns, setTaskColumns) => {
+		// user drops outside the list
 		if (!result.destination) return
 		const { source, destination } = result
+		if (source.droppableId === destination.droppableId && destination.index=== source.index) return
 
 		if (source.droppableId !== destination.droppableId) {
           
 			const sourceColumn = taskColumns[source.droppableId]
-			const destColumn = taskColumns[destination.droppableId]
-          
+			const destColumn = taskColumns[destination.droppableId]     
 			const sourceItems = sourceColumn.items
 			const destItems = destColumn.items
 			// remove from old column
@@ -36,26 +37,11 @@ const MainContent = () => {
 					items: destItems
 				}
 			})
-		} else {
-			// drag and drop in same column
-          
-			const column = taskColumns[source.droppableId]
-			const copiedItems = [...column.items]
-			const [removed] = copiedItems.splice(source.index, 1)
-			copiedItems.splice(destination.index, 0, removed)
-			setTaskColumns({
-				...taskColumns,
-				[source.droppableId]: {
-					...column,
-					items: copiedItems
-				}
-			})
 		}
 	}
 	const addNewCard = () => {
 		setCards([...cards,{id:uuid(), text: ''}])
 		// put new card in all task column
-		console.log('columns data',taskColumns['all-task'])
 		taskColumns['all-task'].items.push({id:uuid(), text: ''})
 
 	}
