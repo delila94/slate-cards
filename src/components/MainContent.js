@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
-import Card from './Card'
 import AddIcon from '@material-ui/icons/Add'
 import { initialCards, columnsFromBackend } from './cardsData'
+import DroppableComponent from './DroppableComponent'
 
 const MainContent = () => {
 
@@ -60,52 +60,7 @@ const MainContent = () => {
 							<div className="column-wrap" key={columnId}>
 								<h2>{column.name}</h2>
 								<div style={{ margin: '8px' }}>
-									<Droppable droppableId={columnId} key={columnId}>
-										{(provided, snapshot) => {
-											return (
-												<div className="dropbox"
-													{...provided.droppableProps}
-													ref={provided.innerRef}
-													style={{
-														background: snapshot.isDraggingOver
-															? '#9EE493'
-															: '#DAF7DC'
-                          
-													}}
-												>
-													{column.items.map((item, index) => {
-														return (
-															<Draggable
-																key={item.id}
-																draggableId={item.id}
-																index={index}
-															>
-																{(provided, snapshot) => {
-																	return (
-																		<div className="dragbox"
-																			ref={provided.innerRef}
-																			{...provided.draggableProps}
-																			{...provided.dragHandleProps}
-																			style={{
-                                      
-																				backgroundColor: snapshot.isDragging
-																					? '#86BBD8'
-																					: '#336699',
-																				...provided.draggableProps.style
-																			}}
-																		>
-																			<Card card={item}/>
-																		</div>
-																	)
-																}}
-															</Draggable>
-														)
-													})}
-													{provided.placeholder}
-												</div>
-											)
-										}}
-									</Droppable>
+									<DroppableComponent column={column} columnId={columnId}/>
 								</div>
 							</div>
 						)

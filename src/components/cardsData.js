@@ -15,19 +15,19 @@ export  const initialCards  =[
 
 ]
 export const columnsFromBackend = {
-	['all-task']: {
+	'all-task': {
 		name: 'All Task',
 		items: initialCards
 	},
-	['to-do']: {
+	'to-do': {
 		name: 'To do',
 		items: []
 	},
-	['in-progress']: {
+	'in-progress': {
 		name: 'In Progress',
 		items: []
 	},
-	['done']: {
+	'done': {
 		name: 'Done',
 		items: []
 	}
